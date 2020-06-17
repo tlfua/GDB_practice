@@ -1,0 +1,40 @@
+g++ -g -lm -std=c99 -w primesProgram-fixed.c
+
+gdb a.out
+
+----
+
+b getPrimes
+
+r
+
+watch *result@10
+
+c
+
+/*
+Old value = {29590344, 1977432392, -998029078, 1096637192, 1096630620, -1017167522, 254699110, 33823, -218103808, -1007018481}
+New value = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+getPrimes (n=10) at primesProgram-fixed.c:55
+55	  result[0] = 2;
+*/
+
+c
+
+/*
+Old value = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+New value = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+getPrimes (n=10) at primesProgram-fixed.c:56
+56	  int i = 1;
+*/
+
+c
+
+/*
+Old value = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+New value = {2, 3, 0, 0, 0, 0, 0, 0, 0, 0}
+getPrimes (n=10) at primesProgram-fixed.c:61
+61	      i++;
+*/
+
+...
