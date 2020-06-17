@@ -1,0 +1,141 @@
+g++ -g app.cpp
+
+gdb a.out
+
+----
+
+b main
+
+run
+
+l
+// show some parts of the program
+
+f
+// frame
+
+n
+
+n
+
+p main_var
+// $1 = 10
+
+n
+
+n
+// return 0;
+
+----
+
+b main
+
+r
+// run
+
+n
+
+n
+
+n
+
+s
+// step
+// into fun1()
+
+n
+
+n
+
+p fun1_var
+// $1 = 15
+
+n
+
+s
+// into fun2()
+
+n
+
+bt
+/*
+#0  fun2 () at app.cpp:15
+#1  0x0000555555555252 in fun1 () at app.cpp:24
+#2  0x000055555555528d in main () at app.cpp:31
+*/
+
+n
+
+n
+
+s
+// into fun3()
+
+n
+
+n
+
+bt
+/*
+#0  fun3 () at app.cpp:10
+#1  0x0000555555555217 in fun2 () at app.cpp:17
+#2  0x0000555555555252 in fun1 () at app.cpp:24
+#3  0x000055555555528d in main () at app.cpp:31
+*/
+
+info b
+/*
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000555555555255 in main() at app.cpp:28
+	breakpoint already hit 1 time
+*/
+
+delete 1
+
+info b
+/*
+No breakpoints or watchpoints.
+*/
+
+c
+
+----
+
+b main
+
+b fun3
+
+r
+// Breakpoint 1, main () at app.cpp:28
+
+c
+// Breakpoint 2, fun3 () at app.cpp:8
+
+bt
+/*
+#0  fun3 () at app.cpp:8
+#1  0x0000555555555217 in fun2 () at app.cpp:17
+#2  0x0000555555555252 in fun1 () at app.cpp:24
+#3  0x000055555555528d in main () at app.cpp:31
+*/
+
+f 2
+
+p fun1_var
+// $1 = 15
+
+f 0
+
+p fun1_var
+// No symbol "fun1_var" in current context.
+
+n
+
+n
+
+info locals
+// fun3_var = 25
+
+
+
+
