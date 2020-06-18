@@ -1,0 +1,128 @@
+gcc -g test.c
+
+gdb a.out
+
+----
+
+start
+
+list
+// list the first 10 instructions
+
+(type Enter)
+// list next 10 instructions
+
+(type Enter)
+
+s
+// step to next instruction
+// 9	    sum = 0;
+
+p sum
+// $1 = 0
+
+s
+// 10	    strcpy(string, "Hello!");
+
+p sum
+// $2 = 0
+
+----
+
+start
+
+s
+
+s
+
+s
+
+p string
+/*
+$3 = "Hello!", '\000' <repeats 26 times>, "@@UUUU\000\000\377\266\360\000\000\000\000\000\302\000\000\000\000\000\000\000\327\347\377\377\377\177\000\000\326\347\377\377\377\177\000\000\275RUUUU\000\000ȟ\372\367\377\177\000\000pRUUUU\000\000\000\000\000\000\000\000\000\000\200PUUUU\000\000\340\350\377\377\377\177\000"
+*/
+
+x string
+// 0x7fffffffe770:	0x6c6c6548
+
+x
+// 0x7fffffffe774:	0x0000216f
+
+x
+// 0x7fffffffe778:	0x00000000
+
+x/b string
+// 0x7fffffffe770:	0x48
+
+x
+// 0x7fffffffe771:	0x65
+
+x
+// 0x7fffffffe772:	0x6c
+
+x
+// 0x7fffffffe773:	0x6c
+
+x
+// 0x7fffffffe774:	0x6f
+
+x
+// 0x7fffffffe775:	0x21
+
+x
+// 0x7fffffffe776:	0x00
+
+x/10b string
+// 0x7fffffffe770:	0x48	0x65	0x6c	0x6c	0x6f	0x21	0x00	0x00
+// 0x7fffffffe778:	0x00	0x00
+
+(after some steps)
+
+p big
+// $4 = 2
+
+p &big
+// $5 = (int *) 0x7fffffffe73c
+
+x/b 0x7fffffffe73c
+// 0x7fffffffe73c:	0x02
+
+x
+// 0x7fffffffe73d:	0x00
+
+x
+// 0x7fffffffe73e:	0x00
+
+x
+// 0x7fffffffe73f:	0x00
+
+rwatch i
+// set read watch point
+
+----
+
+start
+
+b 14
+
+c
+/*
+Continuing.
+
+Breakpoint 5, main () at test.c:14
+14		sum = square(sum, i);
+*/
+
+----
+
+start
+
+(after some steps)
+
+p sum
+// $7 = 1
+
+set var sum = 23
+
+p sum
+// $8 = 23
